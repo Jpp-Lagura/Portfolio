@@ -203,14 +203,21 @@ svg.lucide {
 
 .profile img,
 .profile .ph {
-    width: 150px;
-    height: 150px;
+    width: 180px;
+    height: 225px;
     border-radius: 18px;
     object-fit: cover;
     background: var(--chip);
     border: 1px solid var(--line);
 }
+#profile img {
+  background: linear-gradient(160deg, var(--bg),var(--bg)); /* light theme */
+  transition: background .3s ease;
+}
 
+[data-theme="dark"] #profile img {
+  background: linear-gradient(160deg, #0E0E10,#0E0E10); /* dark theme */
+}
 .profile h1 {
     font-size: 1.7rem;
     font-weight: 700;
