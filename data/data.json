@@ -56,10 +56,10 @@
   ],
   "contact": { "cta": "Have a project or opportunity? Let's connect.", "email": "johnlagura2012@gmail.com", "links": ["GitHub", "LinkedIn"] },
   "gallery": [
-    { "src": "css/images/pose1.jpg", "alt": "Photo 1" },
-    { "src": "css/images/pose2.jpg", "alt": "Photo 2" },
-    { "src": "css/images/pose3.jpg", "alt": "Photo 3" },
-    { "src": "css/images/pose4.jpg", "alt": "Photo 4" },
-    { "src": "css/images/pose5.jpg", "alt": "Photo 5" }
+    { "src": "/css/images/pose1.jpg", "alt": "Photo 1" },
+    { "src": "/css/images/pose2.jpg", "alt": "Photo 2" },
+    { "src": "/css/images/pose3.jpg", "alt": "Photo 3" },
+    { "src": "/css/images/pose4.jpg", "alt": "Photo 4" },
+    { "src": "/css/images/pose5.jpg", "alt": "Photo 5" }
   ]
 }

@@ -73,19 +73,78 @@ function renderContact(c, d) {
 
 
 async function renderGallery() {
-    const response = await fetch('./data/data.json');
-    const data = await response.json();
-
     const gallery = document.getElementById('gallery');
 
-    // Duplicate images for infinite scrolling
-    const images = [...data.gallery, ...data.gallery];
+    if (!gallery) return;
 
-    gallery.innerHTML = images.map(photo => `
-        <figure>
-            <img src="${photo.src}" alt="${photo.alt}" loading="lazy">
-        </figure>
-    `).join('');
+    // Show loading indicator
+    gallery.innerHTML = `
+        <div class="gallery-loading">
+            <span class="loader"></span>
+            <p>Loading gallery...</p>
+        </div>
+    `;
+
+    try {
+        const response = await fetch('/data/data.json');
+
+        if (!response.ok) {
+            throw new Error(`Failed to load JSON: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (!Array.isArray(data.gallery) || data.gallery.length === 0) {
+            throw new Error('No gallery images found.');
+        }
+
+        // Duplicate images for infinite scrolling
+        const images = [...data.gallery, ...data.gallery];
+
+        gallery.innerHTML = images.map((photo, index) => `
+            <figure>
+                <img
+                    src="${photo.src}"
+                    alt="${photo.alt || 'Gallery image'}"
+                    loading="${index < 3 ? 'eager' : 'lazy'}"
+                    decoding="async"
+                >
+            </figure>
+        `).join('');
+
+        // Wait for the first 3 images to load or fail
+        const firstImages = [...gallery.querySelectorAll('img')].slice(0, 3);
+
+        await Promise.all(
+            firstImages.map(img => {
+                if (img.complete) return Promise.resolve();
+
+                return new Promise(resolve => {
+                    img.addEventListener('load', resolve, { once: true });
+                    img.addEventListener('error', resolve, { once: true });
+                });
+            })
+        );
+
+        gallery.classList.add('loaded');
+
+        // Handle broken image paths
+        gallery.querySelectorAll('img').forEach(img => {
+            img.addEventListener('error', () => {
+                img.closest('figure')?.classList.add('image-error');
+            });
+        });
+
+    } catch (error) {
+        console.error('Gallery error:', error);
+
+        gallery.innerHTML = `
+            <div class="gallery-error">
+                <p>Unable to load gallery images.</p>
+                <button onclick="renderGallery()">Try Again</button>
+            </div>
+        `;
+    }
 }
 
 
