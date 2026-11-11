@@ -74,7 +74,6 @@ function renderContact(c, d) {
 
 async function renderGallery() {
     const gallery = document.getElementById('gallery');
-
     if (!gallery) return;
 
     // Show loading indicator
@@ -86,47 +85,29 @@ async function renderGallery() {
     `;
 
     try {
-        const response = await fetch('/data/data.json');
-
+        // Use relative path matching init()
+        const response = await fetch('data/data.json');
         if (!response.ok) {
             throw new Error(`Failed to load JSON: ${response.status}`);
         }
 
         const data = await response.json();
-
         if (!Array.isArray(data.gallery) || data.gallery.length === 0) {
             throw new Error('No gallery images found.');
         }
 
-        // Duplicate images for infinite scrolling
+        // Duplicate images for infinite scrolling loop
         const images = [...data.gallery, ...data.gallery];
-
         gallery.innerHTML = images.map((photo, index) => `
             <figure>
                 <img
-                    src="${photo.src}"
-                    alt="${photo.alt || 'Gallery image'}"
+                    src="${esc(photo.src)}"
+                    alt="${esc(photo.alt || 'Gallery image')}"
                     loading="${index < 3 ? 'eager' : 'lazy'}"
                     decoding="async"
                 >
             </figure>
         `).join('');
-
-        // Wait for the first 3 images to load or fail
-        const firstImages = [...gallery.querySelectorAll('img')].slice(0, 3);
-
-        await Promise.all(
-            firstImages.map(img => {
-                if (img.complete) return Promise.resolve();
-
-                return new Promise(resolve => {
-                    img.addEventListener('load', resolve, { once: true });
-                    img.addEventListener('error', resolve, { once: true });
-                });
-            })
-        );
-
-        gallery.classList.add('loaded');
 
         // Handle broken image paths
         gallery.querySelectorAll('img').forEach(img => {
@@ -135,9 +116,24 @@ async function renderGallery() {
             });
         });
 
+        // Wait for first 3 images OR timeout after 1.5s (prevents iOS Safari lockup)
+        const firstImages = [...gallery.querySelectorAll('img')].slice(0, 3);
+        const imageLoadPromises = firstImages.map(img => {
+            if (img.complete) return Promise.resolve();
+            return new Promise(resolve => {
+                img.addEventListener('load', resolve, { once: true });
+                img.addEventListener('error', resolve, { once: true });
+            });
+        });
+
+        const timeoutPromise = new Promise(resolve => setTimeout(resolve, 1500));
+        await Promise.race([Promise.all(imageLoadPromises), timeoutPromise]);
+
+        // Reveal gallery
+        gallery.classList.add('loaded');
+
     } catch (error) {
         console.error('Gallery error:', error);
-
         gallery.innerHTML = `
             <div class="gallery-error">
                 <p>Unable to load gallery images.</p>

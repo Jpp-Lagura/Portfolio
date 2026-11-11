@@ -607,6 +607,9 @@ a.row:hover {
     overflow: hidden;
     border-radius: 12px;
     margin: 0;
+    flex-shrink: 0;
+    width: 280px; /* or auto with fixed height */
+    height: 200px;
 }
 
 .gallery-track img {
