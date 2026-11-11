@@ -1,5 +1,10 @@
+
 {
-  "site": { "initials": "Jpp.", "tagline": "Personal Portfolio", "description": "Portfolio of John Paul C. Lagura, a BSIT student and aspiring web developer from Butuan City, Philippines." },
+  "site": {
+    "initials": "Jpp.",
+    "tagline": "Personal Portfolio",
+    "description": "Portfolio of John Paul C. Lagura, a BSIT student and aspiring web developer from Butuan City, Philippines."
+  },
   "nav": [
     { "label": "About", "target": "about" },
     { "label": "Stack", "target": "stack" },
@@ -18,43 +23,205 @@
     "I'm a 3rd-year BSIT student with a curiosity for how technology can make everyday life a little better.",
     "I enjoy building for the web and mobile — turning ideas into simple, thoughtful experiences while learning something new along the way.",
     "I'm currently learning web development by building websites and hands-on projects, while continuously improving my skills. I'm eager to gain real-world experience, contribute to projects, and grow as a developer."
-  ],  "experience": [
-  { "label": "Current", "title": "BSIT Student", "org": "Caraga State University", "period": "2024 – Present", "points": ["Building web applications and academic projects.", "Learning modern frontend and backend technologies."] },
-  { "label": "Hands-on", "title": "Academic Projects", "org": "", "period": "", "points": ["Developing full-stack applications for school requirements.", "Practicing database design, REST APIs, authentication, and CRUD operations."] },
-  { "label": "Ongoing", "title": "Self-Directed Learning", "org": "", "period": "", "points": ["Learning web development, AI-assisted coding, and software development best practices."] },
-  { "label": "Hands-on", "title": "Data Structures & Algorithms", "org": "", "period": "", "points": ["Implementing core algorithms and data structures to solve computational problems.", "Practicing code efficiency, optimization, and algorithmic logic."] },
-    { "label": "Foundational", "title": "Object-Oriented Programming (OOP)", "org": "", "period": "", "points": ["Studying core principles including Encapsulation, Inheritance, Polymorphism, and Abstraction.", "Writing clean, modular, and reusable code for software design."] }
-],
+  ],
+  "experience": [
+    {
+      "label": "Current",
+      "title": "BSIT Student",
+      "org": "Caraga State University",
+      "period": "2024 – Present",
+      "points": [
+        "Building web applications and academic projects.",
+        "Learning modern frontend and backend technologies."
+      ]
+    },
+    {
+      "label": "Hands-on",
+      "title": "Academic Projects",
+      "org": "",
+      "period": "",
+      "points": [
+        "Developing full-stack applications for school requirements.",
+        "Practicing database design, REST APIs, authentication, and CRUD operations."
+      ]
+    },
+    {
+      "label": "Ongoing",
+      "title": "Self-Directed Learning",
+      "org": "",
+      "period": "",
+      "points": [
+        "Learning web development, AI-assisted coding, and software development best practices."
+      ]
+    },
+    {
+      "label": "Hands-on",
+      "title": "Data Structures & Algorithms",
+      "org": "",
+      "period": "",
+      "points": [
+        "Implementing core algorithms and data structures to solve computational problems.",
+        "Practicing code efficiency, optimization, and algorithmic logic."
+      ]
+    },
+    {
+      "label": "Foundational",
+      "title": "Object-Oriented Programming (OOP)",
+      "org": "",
+      "period": "",
+      "points": [
+        "Studying core principles including Encapsulation, Inheritance, Polymorphism, and Abstraction.",
+        "Writing clean, modular, and reusable code for software design."
+      ]
+    }
+  ],
   "skills": [
-    { "category": "Frontend", "items": ["HTML", "CSS", "JavaScript", "Vue.js", "Nuxt.js", "Tailwind CSS"] },
-    { "category": "Backend", "items": ["Node.js", "NestJS", "Prisma", "PostgreSQL", "REST APIs"] },
-    { "category": "Tools & Platforms", "items": ["Git", "GitHub", "VS Code", "Figma"] },
-    { "category": "Foundational Skills", "items": ["UI Design Basics", "Responsive Web Design", "API Integration (Beginner)", "PHP (Beginner)", "Python (Learning)"] },
-    { "category": "AI & Agentic Coding Tools", "items": ["Claude Code", "GitHub Copilot", "Cursor", "OpenAI Codex"] }
+    {
+      "category": "Frontend",
+      "items": [
+        { "name": "HTML", "icon": "/css/icons/html5.svg" },
+        { "name": "CSS", "icon": "/css/icons/css_old.svg" },
+        { "name": "JavaScript", "icon": "/css/icons/javascript.svg" },
+        { "name": "Vue.js", "icon": "/css/icons/vue.svg" },
+        { "name": "Nuxt.js", "icon": "/css/icons/nuxt.svg" },
+        { "name": "Tailwind CSS", "icon": "/css/icons/tailwindcss.svg" }
+      ]
+    },
+    {
+      "category": "Backend",
+      "items": [
+        { "name": "Node.js", "icon": "/css/icons/nodejs.svg" },
+        { "name": "NestJS", "icon": "/css/icons/nestjs.svg" },
+        { "name": "Prisma", "icon": "/css/icons/prisma.svg" },
+        { "name": "PostgreSQL", "icon": "https://svgl.app/library/postgresql.svg" }
+      ]
+    },
+    {
+      "category": "Tools & Platforms",
+      "items": [
+        { "name": "Git", "icon": "/css/icons/git.svg" },
+        { "name": "GitHub", "icon": "/css/icons/github_light.svg" },
+        { "name": "VS Code", "icon": "/css/icons/vscode.svg" },
+        { "name": "Figma", "icon": "/css/icons/figma.svg" }
+      ]
+    },
+    {
+      "category": "AI & Agentic Coding Tools",
+      "items": [
+        { "name": "Claude Code", "icon": "/css/icons/claude-ai-icon.svg" },
+        { "name": "GitHub Copilot", "icon": "/css/icons/copilot.svg" },
+        { "name": "Cursor", "icon": "/css/icons/Cursor_light.svg" },
+        { "name": "OpenAI Codex", "icon": "/css/icons/Codex_light.svg" }
+      ]
+    },
+    {
+      "category": "Foundational Skills",
+      "items": [
+        "UI Design Basics",
+        "Responsive Web Design",
+        "API Integration (Beginner)",
+        "PHP (Beginner)",
+        "Python (Learning)"
+      ]
+    }
   ],
   "projects": [
-    { "title": "Assignment Submission Tracker", "description": "A web application for students and instructors to manage assignments, submissions, and grading.", "tags": ["Vue.js", "NestJS", "PostgreSQL"], "image": "", "github": "https://github.com/your-username/assignment-tracker", "demo": "" },
-    { "title": "Student Management System", "description": "CRUD-based application for managing student records.", "tags": ["Node.js", "PostgreSQL", "REST API"], "image": "", "github": "https://github.com/your-username/student-management", "demo": "" },
-    { "title": "Portfolio Website", "description": "Personal portfolio showcasing my projects, skills, and experience.", "tags": ["HTML", "CSS", "JavaScript"], "image": "", "github": "https://github.com/your-username/portfolio", "demo": "https://your-username.github.io/portfolio" },
-    { "title": "Academic Web Projects", "description": "Placeholder: replace with a short description of your school projects.", "tags": ["HTML", "CSS", "JavaScript"], "image": "", "github": "", "demo": "" }
+    {
+      "title": "Assignment Submission Tracker",
+      "description": "A web application for students and instructors to manage assignments, submissions, and grading.",
+      "tags": ["Vue.js", "NestJS", "PostgreSQL"],
+      "image": "",
+      "github": "https://github.com/your-username/assignment-tracker",
+      "demo": ""
+    },
+    {
+      "title": "Student Management System",
+      "description": "CRUD-based application for managing student records.",
+      "tags": ["Node.js", "PostgreSQL", "REST API"],
+      "image": "",
+      "github": "https://github.com/your-username/student-management",
+      "demo": ""
+    },
+    {
+      "title": "Portfolio Website",
+      "description": "Personal portfolio showcasing my projects, skills, and experience.",
+      "tags": ["HTML", "CSS", "JavaScript"],
+      "image": "",
+      "github": "https://github.com/your-username/portfolio",
+      "demo": "https://your-username.github.io/portfolio"
+    },
+    {
+      "title": "Academic Web Projects",
+      "description": "Placeholder: replace with a short description of your school projects.",
+      "tags": ["HTML", "CSS", "JavaScript"],
+      "image": "",
+      "github": "",
+      "demo": ""
+    }
   ],
   "certifications": [
-    { "title": "Certification Title (placeholder)", "issuer": "Issuing Organization", "date": "Year", "link": "" },
-    { "title": "Certification Title (placeholder)", "issuer": "Issuing Organization", "date": "Year", "link": "" }
+    {
+      "title": "Certification Title (placeholder)",
+      "issuer": "Issuing Organization",
+      "date": "Year",
+      "link": ""
+    },
+    {
+      "title": "Certification Title (placeholder)",
+      "issuer": "Issuing Organization",
+      "date": "Year",
+      "link": ""
+    }
   ],
   "goals": [
-    { "heading": "Career Goals", "icon": "target", "text": "Grow as a web developer and gain real-world development experience." },
-    { "heading": "Currently Learning", "icon": "book-open", "text": "Full-stack web development, REST APIs, databases, authentication, and AI-assisted development." },
-    { "heading": "Interests", "icon": "heart", "text": "Web development, software engineering, football, and technology." }
+    {
+      "heading": "Career Goals",
+      "icon": "target",
+      "text": "Grow as a web developer and gain real-world development experience."
+    },
+    {
+      "heading": "Currently Learning",
+      "icon": "book-open",
+      "text": "Full-stack web development, REST APIs, databases, authentication, and AI-assisted development."
+    },
+    {
+      "heading": "Interests",
+      "icon": "heart",
+      "text": "Web development, software engineering, football, and technology."
+    }
   ],
   "social": [
-    { "name": "GitHub", "icon": "github", "url": "https://github.com/Jpp-Lagura" },
-    { "name": "LinkedIn", "icon": "linkedin", "url": "https://www.linkedin.com/in/john-paul-lagura-870285441/" },
-    { "name": "Instagram", "icon": "instagram", "url": "https://www.instagram.com/jplaguraa_/" },
-    { "name": "Facebook", "icon": "facebook", "url": "https://www.facebook.com/johnlagura15" },
-    { "name": "Messenger", "icon": "message-circle", "url": "https://m.me/your-username" }
+    {
+      "name": "GitHub",
+      "icon": "github",
+      "url": "https://github.com/Jpp-Lagura"
+    },
+    {
+      "name": "LinkedIn",
+      "icon": "linkedin",
+      "url": "https://www.linkedin.com/in/john-paul-lagura-870285441/"
+    },
+    {
+      "name": "Instagram",
+      "icon": "instagram",
+      "url": "https://www.instagram.com/jplaguraa_/"
+    },
+    {
+      "name": "Facebook",
+      "icon": "facebook",
+      "url": "https://www.facebook.com/johnlagura15"
+    },
+    {
+      "name": "Messenger",
+      "icon": "message-circle",
+      "url": "https://m.me/your-username"
+    }
   ],
-  "contact": { "cta": "Have a project or opportunity? Let's connect.", "email": "johnlagura2012@gmail.com", "links": ["GitHub", "LinkedIn"] },
+  "contact": {
+    "cta": "Have a project or opportunity? Let's connect.",
+    "email": "johnlagura2012@gmail.com",
+    "links": ["GitHub", "LinkedIn"]
+  },
   "gallery": [
     { "src": "/css/images/pose1.jpg", "alt": "Photo 1" },
     { "src": "/css/images/pose2.jpg", "alt": "Photo 2" },

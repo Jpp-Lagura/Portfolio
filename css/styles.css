@@ -358,22 +358,44 @@ svg.lucide {
     flex-wrap: wrap;
     gap: 6px;
 }
-
 .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
     background: var(--chip);
     border: 1px solid var(--line);
     border-radius: 10px;
+
     padding: 11px 20px;
     font-size: .72rem;
-    transition: transform .2s ease, background .2s ease, border-color .2s ease;
-    cursor: pointer;
+
+    transition:
+        transform .15s ease,
+        border-color .15s ease;
 }
 
 .badge:hover {
     transform: translateX(4px);
-    background: var(--line);
     border-color: var(--accent);
 }
+
+.skill-icon {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    flex-shrink: 0;
+    transition: filter 0.3s ease;
+}
+
+[data-theme="dark"] .skill-icon[data-name="Prisma"],
+[data-theme="dark"] .skill-icon[data-name="GitHub"],
+[data-theme="dark"] .skill-icon[data-name="GitHub Copilot"],
+[data-theme="dark"] .skill-icon[data-name="Cursor"],
+[data-theme="dark"] .skill-icon[data-name="OpenAI Codex"] {
+  filter: brightness(0) invert(1);
+}
+
 
 
 /* ========================================
@@ -608,7 +630,7 @@ a.row:hover {
     border-radius: 12px;
     margin: 0;
     flex-shrink: 0;
-    width: 280px; /* or auto with fixed height */
+    width: 280px;
     height: 200px;
 }
 

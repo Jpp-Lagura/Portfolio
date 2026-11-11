@@ -3,9 +3,21 @@ const $ = (s, r = document) => r.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const icons = () => window.lucide && lucide.createIcons();
 
+const asset = p => (p && !/^([a-z]+:)?\/\//i.test(p)) ? String(p).replace(/^\/+/, "") : (p || "");
+
 /* ---------- renderers ---------- */
-const badges = items => `<div class="badges">${items.map(t => `<span class="badge">${esc(t)}</span>`).join("")}</div>`;
-const linkBtn = (href, icon, label) => href ? `<a class="btn sm" href="${esc(href)}" target="_blank" rel="noopener"><i data-lucide="${icon}"></i>${label}</a>` : "";
+// Accepts "HTML" or { name: "HTML", icon: "path/to/icon.svg" }
+const badges = items => `
+  <div class="badges">
+    ${(items || []).map(item => {
+      if (typeof item === "string") return `<span class="badge">${esc(item)}</span>`;
+      return `<span class="badge">${item.icon ? `<img src="${esc(asset(item.icon))}" alt="" class="skill-icon" data-name="${esc(item.name)}" width="24" height="24" loading="lazy" aria-hidden="true">` : ""}<span>${esc(item.name)}</span></span>`;
+    }).join("")}
+  </div>`;
+
+const linkBtn = (href, icon, label) => href
+  ? `<a class="btn sm" href="${esc(href)}" target="_blank" rel="noopener"><i data-lucide="${icon}"></i>${label}</a>`
+  : "";
 
 function renderHeader(d) {
   $("#logo").textContent = d.site.initials;
@@ -15,7 +27,7 @@ function renderHeader(d) {
 
 function renderProfile(p) {
   $("#profile").innerHTML = `
-    <img src="${esc(p.photo)}" alt="Portrait of ${esc(p.name)}" width="150" height="150">
+    <img src="${esc(asset(p.photo))}" alt="Portrait of ${esc(p.name)}" width="150" height="150">
     <div>
       <h1>${esc(p.name)} <svg class="verified" viewBox="0 0 24 24" fill="currentColor" role="img" aria-label="Verified"><circle cx="12" cy="12" r="11"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></h1>
       <p class="loc"><i data-lucide="map-pin"></i>${esc(p.location)}</p>
@@ -27,42 +39,48 @@ function renderProfile(p) {
       <p class="muted">${esc(p.description)}</p>
     </div>`;
   const img = $("#profile img");
-  img.addEventListener("error", () => img.replaceWith(Object.assign(document.createElement("div"), { className: "ph", role: "img", ariaLabel: "Profile photo placeholder" })), { once: true });
+  img.addEventListener("error", () => {
+    const ph = document.createElement("div");
+    ph.className = "ph";
+    ph.setAttribute("role", "img");
+    ph.setAttribute("aria-label", "Profile photo placeholder");
+    img.replaceWith(ph);
+  }, { once: true });
 }
 
-const renderSkills = list => $("#skills").innerHTML = list.map(g =>
-  `<div class="skill-group"><h3>${esc(g.category)}</h3>${badges(g.items)}</div>`).join("");
+// data.json skills are grouped: [{ category, items: [...] }]
+const renderSkills = list => { $("#skills").innerHTML = list.map(g =>
+  `<div class="skill-group"><h3>${esc(g.category)}</h3>${badges(g.items)}</div>`).join(""); };
 
-const renderExperience = list => $("#exp").innerHTML = list.map(e => `
+const renderExperience = list => { $("#exp").innerHTML = list.map(e => `
   <article class="exp-item">
     <p class="lbl">${esc(e.label)}</p>
     <h3>${esc(e.title)}</h3>
     ${(e.org || e.period) ? `<p class="meta">${[e.org, e.period].filter(Boolean).map(esc).join(" · ")}</p>` : ""}
-    <ul>${e.points.map(p => `<li>${esc(p)}</li>`).join("")}</ul>
-  </article>`).join("");
+    <ul>${(e.points || []).map(p => `<li>${esc(p)}</li>`).join("")}</ul>
+  </article>`).join(""); };
 
-const renderProjects = list => $("#project-grid").innerHTML = list.map(p => `
+const renderProjects = list => { $("#project-grid").innerHTML = list.map(p => `
   <article class="item">
-    ${p.image ? `<img class="thumb" src="${esc(p.image)}" alt="${esc(p.title)} screenshot" loading="lazy">` : ""}
+    ${p.image ? `<img class="thumb" src="${esc(asset(p.image))}" alt="${esc(p.title)} screenshot" loading="lazy">` : ""}
     <h3>${esc(p.title)}</h3><p>${esc(p.description)}</p>
     ${badges(p.tags)}
     <div class="item-actions">${linkBtn(p.github, "github", "GitHub")}${linkBtn(p.demo, "external-link", "Live demo")}</div>
-  </article>`).join("");
+  </article>`).join(""); };
 
-const renderCerts = list => $("#cert-list").innerHTML = list.map(c => `
+const renderCerts = list => { $("#cert-list").innerHTML = list.map(c => `
   <article class="item">
     <h3>${esc(c.title)}</h3><p>${esc(c.issuer)} · ${esc(c.date)}</p>
     <div class="item-actions">${linkBtn(c.link, "external-link", "View certificate")}</div>
-  </article>`).join("");
+  </article>`).join(""); };
 
-const renderGoals = list => $("#goals").innerHTML = list.map(g => `
-  <div class="row goal"><h3><i data-lucide="${esc(g.icon)}"></i>${esc(g.heading)}</h3><p>${esc(g.text)}</p></div>`).join("");
+const renderGoals = list => { $("#goals").innerHTML = list.map(g => `
+  <div class="row goal"><h3><i data-lucide="${esc(g.icon)}"></i>${esc(g.heading)}</h3><p>${esc(g.text)}</p></div>`).join(""); };
 
-const renderSocial = list => $("#social").innerHTML = list.map(s => `
-  <a class="row" href="${esc(s.url)}" target="_blank" rel="noopener"><i data-lucide="${esc(s.icon)}"></i>${esc(s.name)}<i class="go" data-lucide="arrow-up-right"></i></a>`).join("");
+const renderSocial = list => { $("#social").innerHTML = list.map(s => `
+  <a class="row" href="${esc(s.url)}" target="_blank" rel="noopener"><i data-lucide="${esc(s.icon)}"></i>${esc(s.name)}<i class="go" data-lucide="arrow-up-right"></i></a>`).join(""); };
 
 function renderContact(c, d) {
-  const links = d.social.filter(s => c.links.includes(s.name));
   $("#contact").insertAdjacentHTML("beforeend", `
     <p>${esc(c.cta)}</p>
     <div class="list">
@@ -71,80 +89,38 @@ function renderContact(c, d) {
     </div>`);
 }
 
+// Uses data already loaded by init() (no second fetch)
+async function renderGallery(data) {
+  const gallery = document.getElementById("gallery");
+  if (!gallery) return;
 
-async function renderGallery() {
-    const gallery = document.getElementById('gallery');
-    if (!gallery) return;
+  if (!Array.isArray(data?.gallery) || !data.gallery.length) {
+    gallery.innerHTML = `<div class="gallery-error"><p>No gallery images found.</p></div>`;
+    return;
+  }
 
-    // Show loading indicator
-    gallery.innerHTML = `
-        <div class="gallery-loading">
-            <span class="loader"></span>
-            <p>Loading gallery...</p>
-        </div>
-    `;
+  // Duplicate for infinite scroll loop
+  const images = [...data.gallery, ...data.gallery];
+  gallery.innerHTML = images.map((photo, i) => `
+    <figure>
+      <img src="${esc(asset(photo.src))}" alt="${esc(photo.alt || "Gallery image")}"
+           loading="${i < 3 ? "eager" : "lazy"}" decoding="async">
+    </figure>`).join("");
 
-    try {
-        // Use relative path matching init()
-        const response = await fetch('data/data.json');
-        if (!response.ok) {
-            throw new Error(`Failed to load JSON: ${response.status}`);
-        }
+  gallery.querySelectorAll("img").forEach(img =>
+    img.addEventListener("error", () => img.closest("figure")?.classList.add("image-error"), { once: true })
+  );
 
-        const data = await response.json();
-        if (!Array.isArray(data.gallery) || data.gallery.length === 0) {
-            throw new Error('No gallery images found.');
-        }
-
-        // Duplicate images for infinite scrolling loop
-        const images = [...data.gallery, ...data.gallery];
-        gallery.innerHTML = images.map((photo, index) => `
-            <figure>
-                <img
-                    src="${esc(photo.src)}"
-                    alt="${esc(photo.alt || 'Gallery image')}"
-                    loading="${index < 3 ? 'eager' : 'lazy'}"
-                    decoding="async"
-                >
-            </figure>
-        `).join('');
-
-        // Handle broken image paths
-        gallery.querySelectorAll('img').forEach(img => {
-            img.addEventListener('error', () => {
-                img.closest('figure')?.classList.add('image-error');
-            });
-        });
-
-        // Wait for first 3 images OR timeout after 1.5s (prevents iOS Safari lockup)
-        const firstImages = [...gallery.querySelectorAll('img')].slice(0, 3);
-        const imageLoadPromises = firstImages.map(img => {
-            if (img.complete) return Promise.resolve();
-            return new Promise(resolve => {
-                img.addEventListener('load', resolve, { once: true });
-                img.addEventListener('error', resolve, { once: true });
-            });
-        });
-
-        const timeoutPromise = new Promise(resolve => setTimeout(resolve, 1500));
-        await Promise.race([Promise.all(imageLoadPromises), timeoutPromise]);
-
-        // Reveal gallery
-        gallery.classList.add('loaded');
-
-    } catch (error) {
-        console.error('Gallery error:', error);
-        gallery.innerHTML = `
-            <div class="gallery-error">
-                <p>Unable to load gallery images.</p>
-                <button onclick="renderGallery()">Try Again</button>
-            </div>
-        `;
-    }
+  // Wait for first 3 images or 1.5s, whichever comes first (avoids iOS Safari stalls)
+  const first = [...gallery.querySelectorAll("img")].slice(0, 3).map(img =>
+    img.complete ? Promise.resolve() : new Promise(r => {
+      img.addEventListener("load", r, { once: true });
+      img.addEventListener("error", r, { once: true });
+    })
+  );
+  await Promise.race([Promise.all(first), new Promise(r => setTimeout(r, 1500))]);
+  gallery.classList.add("loaded");
 }
-
-
-
 
 /* ---------- behaviour ---------- */
 function initTheme() {
@@ -184,23 +160,43 @@ function initScroll() {
 }
 
 /* ---------- init ---------- */
+// Runs each section on its own so one failure doesn't blank the page
+async function safe(name, fn) {
+  try { await fn(); } catch (err) { console.error(`[${name}]`, err); }
+}
+
 async function init() {
   initTheme(); initMenu();
+
+  let d;
   try {
     const res = await fetch("data/data.json");
     if (!res.ok) throw new Error(res.status);
-    const d = await res.json();
-    renderHeader(d); renderProfile(d.profile);
-    document.querySelector("#about-text").innerHTML = d.about.join("<br><br>");
-    renderSkills(d.skills); renderExperience(d.experience);
-    renderProjects(d.projects); renderCerts(d.certifications);
-    renderGoals(d.goals); renderSocial(d.social); renderContact(d.contact, d);
-    renderGallery();
-    $("#foot").textContent = `© ${new Date().getFullYear()} ${d.profile.name}. All rights reserved.`;
+    d = await res.json();
   } catch (err) {
     console.error(err);
     $("#main").innerHTML = `<div class="card error" role="alert"><h2>Couldn't load portfolio data</h2><p class="muted">Check that <code>data/data.json</code> exists and is valid JSON, and open the site with a local server (e.g. VS Code Live Server) instead of double-clicking index.html.</p></div>`;
+    icons();
+    return;
   }
-  icons(); initScroll();
+
+  await safe("header", () => renderHeader(d));
+  await safe("profile", () => renderProfile(d.profile));
+  await safe("about", () => { $("#about-text").innerHTML = (d.about || []).map(esc).join("<br><br>"); });
+  await safe("skills", () => renderSkills(d.skills || []));
+  await safe("experience", () => renderExperience(d.experience || []));
+  await safe("projects", () => renderProjects(d.projects || []));
+  await safe("certifications", () => renderCerts(d.certifications || []));
+  await safe("goals", () => renderGoals(d.goals || []));
+  await safe("social", () => renderSocial(d.social || []));
+  await safe("contact", () => renderContact(d.contact, d));
+  await safe("footer", () => { $("#foot").textContent = `© ${new Date().getFullYear()} ${d.profile.name}. All rights reserved.`; });
+
+  icons();
+  initScroll();
+
+  // Gallery last, so slow images never delay the rest of the page
+  safe("gallery", () => renderGallery(d));
 }
+
 document.addEventListener("DOMContentLoaded", init);
