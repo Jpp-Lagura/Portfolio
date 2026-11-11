@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>John Paul C. Lagura — Portfolio</title>
+  <meta name="description" content="Portfolio of John Paul C. Lagura, a BSIT student and aspiring web developer from Butuan City, Philippines.">
+  <meta name="theme-color" content="#f7f7f8">
+  <meta property="og:title" content="John Paul C. Lagura — Portfolio">
+  <meta property="og:description" content="BSIT student and aspiring web developer. Learning, building, and growing one project at a time.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js" defer></script>
+  <script src="js/script.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="header">
+    <div class="container header-in">
+      <a href="#top" class="logo"><b id="logo">Jpp.</b><span id="tagline"></span></a>
+      <nav id="nav" class="nav" aria-label="Main"></nav>
+      <div class="header-actions">
+        <button id="theme" class="icon-btn" aria-label="Toggle dark mode"><i data-lucide="moon"></i></button>
+        <button id="menu" class="icon-btn menu-btn" aria-label="Open menu" aria-expanded="false"><i data-lucide="menu"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="container">
+    <span id="top"></span>
+    <section id="profile" class="profile reveal" aria-label="Profile"></section>
+
+    <div class="two-col">
+      <div class="stack-col">
+        <section id="about" class="card reveal"><h2><i data-lucide="user"></i>About</h2><p id="about-text" class="muted"></p></section>
+        <section id="stack" class="card reveal"><h2><i data-lucide="flask-conical"></i>Tech Stack</h2><div id="skills"></div></section>
+      </div>
+      <section id="experience" class="card reveal"><h2><i data-lucide="briefcase"></i>Experience</h2><div id="exp"></div></section>
+    </div>
+
+    <div class="two-col even">
+      <section id="projects" class="card reveal"><h2><i data-lucide="layout-grid"></i>Recent Projects</h2><div id="project-grid" class="project-grid"></div></section>
+      <section id="certs" class="card reveal"><h2><i data-lucide="badge-check"></i>Recent Certifications</h2><div id="cert-list" class="list"></div></section>
+    </div>
+
+    <section id="connect" class="card connect reveal">
+      <div><h2><i data-lucide="sparkles"></i>Goals &amp; Interests</h2><div id="goals" class="list"></div></div>
+      <div><h2><i data-lucide="link"></i>Social Links</h2><div id="social" class="list"></div></div>
+      <div id="contact"><h2><i data-lucide="message-square"></i>Contact</h2></div>
+    </section>
+
+   <section class="gallery-container" id="gallery-section">
+    <h2><i data-lucide="images"></i>Gallery</h2>
+
+    <div class="gallery-viewport">
+        <div class="gallery-track" id="gallery">
+          
+            <!-- Images loaded from data.json -->
+        </div>
+    </div>
+</section>
+  </main>
+
+  <footer class="footer muted"><span id="foot"></span></footer>
+  <button id="top-btn" class="top-btn" aria-label="Back to top"><i data-lucide="arrow-up"></i></button>
+</body>
+</html>
