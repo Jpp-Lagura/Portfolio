@@ -164,6 +164,45 @@ function initScroll() {
 async function safe(name, fn) {
   try { await fn(); } catch (err) { console.error(`[${name}]`, err); }
 }
+// Scroll Animation
+function initScroll() {
+  // Tag text for the staggered fade-in
+  document.querySelectorAll(".card, .profile").forEach(section => {
+    section
+      .querySelectorAll("h1, h2, p, .role, .loc, .exp-item h3, .exp-item .meta, .exp-item li")
+      .forEach((el, i) => {
+        el.classList.add("reveal-text");
+        el.style.setProperty("--i", Math.min(i, 8));
+      });
+  });
+
+  // Tag badges for the staggered pop-in (per group)
+  document.querySelectorAll(".badges").forEach(group => {
+    group.querySelectorAll(".badge").forEach((el, i) => {
+      el.classList.add("reveal-badge");
+      el.style.setProperty("--i", Math.min(i, 12));
+    });
+  });
+
+  // One observer for sections, text and badges (created BEFORE it's used)
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+  }), { threshold: .08, rootMargin: "0px 0px -40px 0px" });
+
+  document.querySelectorAll(".reveal, .reveal-text, .reveal-badge").forEach(el => io.observe(el));
+
+  // Nav highlight
+  const links = [...document.querySelectorAll(".nav a")];
+  const spy = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) links.forEach(a => a.classList.toggle("active", a.dataset.target === e.target.id));
+  }), { rootMargin: "-40% 0px -55% 0px" });
+  links.forEach(a => { const s = document.getElementById(a.dataset.target); if (s) spy.observe(s); });
+
+  // Back to top
+  const top = $("#top-btn");
+  addEventListener("scroll", () => top.classList.toggle("show", scrollY > 500), { passive: true });
+  top.addEventListener("click", () => scrollTo({ top: 0, behavior: "smooth" }));
+}
 
 async function init() {
   initTheme(); initMenu();
@@ -193,9 +232,8 @@ async function init() {
   await safe("footer", () => { $("#foot").textContent = `© ${new Date().getFullYear()} ${d.profile.name}. All rights reserved.`; });
 
   icons();
-  initScroll();
+  await safe("scroll", initScroll);
 
-  // Gallery last, so slow images never delay the rest of the page
   safe("gallery", () => renderGallery(d));
 }
 
