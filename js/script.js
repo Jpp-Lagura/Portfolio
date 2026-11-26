@@ -209,7 +209,7 @@ async function init() {
 
   let d;
   try {
-    const res = await fetch("data/data.json");
+    const res = await fetch("data/portfolio.json");
     if (!res.ok) throw new Error(res.status);
     d = await res.json();
   } catch (err) {
